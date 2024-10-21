@@ -18,8 +18,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/css/**", "/js/**", "/images/**", "/static/**").permitAll() // Allow access to static resources
+                        .anyRequest().permitAll()
                 );
         return http.build();
     }
