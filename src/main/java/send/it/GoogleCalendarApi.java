@@ -26,10 +26,10 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class GoogleCalendar {
-    static final Logger logger = LoggerFactory.getLogger(GoogleCalendar.class);
+public class GoogleCalendarApi {
+    static final Logger logger = LoggerFactory.getLogger(GoogleCalendarApi.class);
 
-    private static final String APPLICATION_NAME = "Google Calendar API Example";
+    private static final String APPLICATION_NAME = "SendItGoogleCalendarApi";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
     private static final List<String> SCOPES = Collections.singletonList(CalendarScopes.CALENDAR_READONLY);
@@ -38,7 +38,7 @@ public class GoogleCalendar {
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT)
             throws IOException {
         // Load client secrets.
-        InputStream in = GoogleCalendar.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+        InputStream in = GoogleCalendarApi.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         if (in == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
         }
