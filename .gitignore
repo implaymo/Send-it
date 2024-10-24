@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+/tokens
+credentials.json
