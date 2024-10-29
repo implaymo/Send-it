@@ -16,6 +16,7 @@ import com.google.api.services.people.v1.PeopleServiceScopes;
 import com.google.api.services.people.v1.model.Name;
 import com.google.api.services.people.v1.model.Person;
 import com.google.api.services.people.v1.model.ListConnectionsResponse;
+import com.google.api.services.people.v1.model.SearchResponse;
 
 import javax.naming.directory.SearchResult;
 import java.io.FileNotFoundException;
@@ -87,30 +88,29 @@ public class GooglePeopleApi {
         }
     }
 
-    /*public static void searchContacts() throws InterruptedException, IOException, GeneralSecurityException {
+    public static void searchUserContacts() throws InterruptedException, IOException, GeneralSecurityException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         PeopleService service =
                 new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                         .setApplicationName(APPLICATION_NAME)
                         .build();
         // Warmup cache
-        SearchResponse response = service.people().searchContact()
+        SearchResponse response = service.people().searchContacts()
                 .setQuery("")
                 .setReadMask("names,emailAddresses")
                 .execute();
 
-
         // Wait a few seconds
         Thread.sleep(5);
 
-
-
         // Send search request
-        SearchResponse response = service.people().searchContacts()
+        SearchResponse response1 = service.people().searchContacts()
                 .setQuery("Mar")
                 .setReadMask("names,emailAddresses")
                 .execute();
 
-    }*/
+        System.out.println(response1);
+
+    }
 }
 

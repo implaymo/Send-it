@@ -9,8 +9,8 @@ import java.security.GeneralSecurityException;
 @SpringBootApplication
 public class SenditApplication {
 
-	public static void main(String[] args) throws GeneralSecurityException, IOException {
+	public static void main(String[] args) throws GeneralSecurityException, IOException, InterruptedException {
 		SpringApplication.run(SenditApplication.class, args);
-		GooglePeopleApi.getContacts();
+		GooglePeopleApi.searchUserContacts();
 	}
 }
