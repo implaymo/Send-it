@@ -17,6 +17,7 @@ import com.google.api.services.people.v1.model.Name;
 import com.google.api.services.people.v1.model.Person;
 import com.google.api.services.people.v1.model.ListConnectionsResponse;
 
+import javax.naming.directory.SearchResult;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,7 +34,6 @@ public class GooglePeopleApi {
 
     private static final List<String> SCOPES = Arrays.asList(PeopleServiceScopes.CONTACTS_READONLY);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
-
 
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT)
             throws IOException {
@@ -69,6 +69,7 @@ public class GooglePeopleApi {
                 .setPersonFields("names,emailAddresses")
                 .execute();
 
+
         // Print display name of connections if available.
         List<Person> connections = response.getConnections();
         if (connections != null && connections.size() > 0) {
@@ -85,5 +86,31 @@ public class GooglePeopleApi {
             System.out.println("No connections found.");
         }
     }
+
+    /*public static void searchContacts() throws InterruptedException, IOException, GeneralSecurityException {
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        PeopleService service =
+                new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+                        .setApplicationName(APPLICATION_NAME)
+                        .build();
+        // Warmup cache
+        SearchResponse response = service.people().searchContact()
+                .setQuery("")
+                .setReadMask("names,emailAddresses")
+                .execute();
+
+
+        // Wait a few seconds
+        Thread.sleep(5);
+
+
+
+        // Send search request
+        SearchResponse response = service.people().searchContacts()
+                .setQuery("Mar")
+                .setReadMask("names,emailAddresses")
+                .execute();
+
+    }*/
 }
 
