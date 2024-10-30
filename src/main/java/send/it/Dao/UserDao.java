@@ -1,4 +1,4 @@
-package send.it;
+package send.it.Dao;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -6,6 +6,9 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import send.it.Database.Database;
+import send.it.DatabaseTables.UsersTable;
+import send.it.HibernateUtil;
 
 public class UserDao {
 

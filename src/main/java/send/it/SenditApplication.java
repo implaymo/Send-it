@@ -2,6 +2,7 @@ package send.it;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import send.it.GoogleApi.GooglePeopleApi;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -11,6 +12,6 @@ public class SenditApplication {
 
 	public static void main(String[] args) throws GeneralSecurityException, IOException, InterruptedException {
 		SpringApplication.run(SenditApplication.class, args);
-		GooglePeopleApi.searchUserContacts();
+		//GooglePeopleApi.searchUserContacts();
 	}
 }

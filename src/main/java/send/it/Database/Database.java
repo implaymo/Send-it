@@ -1,4 +1,4 @@
-package send.it;
+package send.it.Database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

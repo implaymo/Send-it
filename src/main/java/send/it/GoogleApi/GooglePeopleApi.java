@@ -1,4 +1,4 @@
-package send.it;
+package send.it.GoogleApi;
 
 
 import com.google.api.client.auth.oauth2.Credential;
@@ -18,7 +18,6 @@ import com.google.api.services.people.v1.model.Person;
 import com.google.api.services.people.v1.model.ListConnectionsResponse;
 import com.google.api.services.people.v1.model.SearchResponse;
 
-import javax.naming.directory.SearchResult;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,6 +34,16 @@ public class GooglePeopleApi {
 
     private static final List<String> SCOPES = Arrays.asList(PeopleServiceScopes.CONTACTS_READONLY);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
+    private final PeopleService peopleService;
+
+
+
+    public GooglePeopleApi() throws GeneralSecurityException, IOException {
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        this.peopleService = new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+    }
 
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT)
             throws IOException {
@@ -88,14 +97,9 @@ public class GooglePeopleApi {
         }
     }
 
-    public static void searchUserContacts() throws InterruptedException, IOException, GeneralSecurityException {
-        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        PeopleService service =
-                new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
-                        .setApplicationName(APPLICATION_NAME)
-                        .build();
+    public SearchResponse searchUserContacts(String userSearchedContact) throws InterruptedException, IOException, GeneralSecurityException {
         // Warmup cache
-        SearchResponse response = service.people().searchContacts()
+        SearchResponse response = peopleService.people().searchContacts()
                 .setQuery("")
                 .setReadMask("names,emailAddresses")
                 .execute();
@@ -104,13 +108,11 @@ public class GooglePeopleApi {
         Thread.sleep(5);
 
         // Send search request
-        SearchResponse response1 = service.people().searchContacts()
-                .setQuery("Mar")
+        SearchResponse contacts = peopleService.people().searchContacts()
+                .setQuery(userSearchedContact)
                 .setReadMask("names,emailAddresses")
                 .execute();
-
-        System.out.println(response1);
-
+        return contacts;
     }
 }
 

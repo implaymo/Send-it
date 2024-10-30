@@ -1,4 +1,4 @@
-package send.it;
+package send.it.GoogleApi;
 
 
 import com.google.api.client.auth.oauth2.Credential;
@@ -18,6 +18,7 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import send.it.Time;
 
 import java.io.*;
 import java.security.GeneralSecurityException;

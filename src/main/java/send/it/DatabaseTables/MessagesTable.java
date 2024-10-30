@@ -1,4 +1,4 @@
-package send.it;
+package send.it.DatabaseTables;
 
 
 import jakarta.persistence.*;
