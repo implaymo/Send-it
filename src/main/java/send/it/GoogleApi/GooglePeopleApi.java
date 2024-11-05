@@ -19,7 +19,6 @@ import com.google.api.services.people.v1.model.ListConnectionsResponse;
 import com.google.api.services.people.v1.model.SearchResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import send.it.Controllers.LandingPageController;
 
 import java.io.*;
 import java.security.GeneralSecurityException;
@@ -34,20 +33,8 @@ public class GooglePeopleApi {
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
     private static final List<String> SCOPES = Arrays.asList(PeopleServiceScopes.CONTACTS_READONLY);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
-    private static PeopleService peopleService;
     static final Logger logger = LoggerFactory.getLogger(GooglePeopleApi.class);
 
-
-    public GooglePeopleApi() throws GeneralSecurityException, IOException {
-        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        peopleService = new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
-                .setApplicationName(APPLICATION_NAME)
-                .build();
-    }
-
-    public GooglePeopleApi(PeopleService peopleService) {
-        this.peopleService = peopleService;
-    }
 
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT)
             throws IOException {
@@ -69,7 +56,11 @@ public class GooglePeopleApi {
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
-    public static List<Name> getContacts(int numberOfContactsUserWants) throws IOException {
+    public static List<Name> getContacts(int numberOfContactsUserWants) throws IOException, GeneralSecurityException {
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        PeopleService peopleService = new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+                .setApplicationName(APPLICATION_NAME)
+                .build();
 
         ListConnectionsResponse response = peopleService.people().connections()
                 .list("people/me")
@@ -82,6 +73,7 @@ public class GooglePeopleApi {
         if (connections != null && !connections.isEmpty()) {
             for (Person person : connections) {
                 if (person.getNames() != null && !person.getNames().isEmpty()) {
+                    System.out.println(person.getNames());
                     names.addAll(person.getNames());
                 }
             }
@@ -92,6 +84,11 @@ public class GooglePeopleApi {
     }
 
     public static SearchResponse searchUserContacts(String userSearchedContact) throws InterruptedException, IOException, GeneralSecurityException {
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        PeopleService peopleService = new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+
         // Warmup cache
         peopleService.people().searchContacts()
                 .setQuery("")

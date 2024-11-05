@@ -15,6 +15,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.Events;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,7 @@ public class GoogleCalendarApi {
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
     private static final List<String> SCOPES = Collections.singletonList(CalendarScopes.CALENDAR_READONLY);
-    private static final String CREDENTIALS_FILE_PATH = "AuthenticationCredentialsGoogleCalendar/credentials.json";
+    private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT)
             throws IOException {
@@ -76,22 +77,13 @@ public class GoogleCalendarApi {
         List<Event> nextEventsOnCalendar = events.getItems();
         System.out.println("Upcoming events");
         for (Event event : nextEventsOnCalendar) {
-            DateTime start = event.getStart().getDateTime();
+            EventDateTime start = event.getStart();
             ZonedDateTime eventTime = Time.convertToZonedDateTime(start);
-            Time.compareCurrentTimeAndEventTime(eventTime);
-            if (start == null) {
-                start = event.getStart().getDate();
+            if (Time.checkIfEventIsIn24Hours(eventTime)) {
+                System.out.printf("%s (%s)\n", event.getSummary(), event.getStart().getDateTime());
             }
-            System.out.printf("%s (%s)\n", event.getSummary(), start);
         }
         return nextEventsOnCalendar;
-    }
-
-    public static void checkEventsInLessThan24Hours() throws IOException, GeneralSecurityException {
-        if (getEvents().isEmpty()) {
-            logger.info("No events found");
-        }
-
     }
 }
 
