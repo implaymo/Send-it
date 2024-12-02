@@ -43,7 +43,7 @@ class GooglePeopleApiTest {
 
 
     @Test
-    void should_return_specified_number_of_contacts() throws IOException {
+    void should_return_specified_number_of_contacts() throws IOException, GeneralSecurityException {
         // arrange
         ListConnectionsResponse response = new ListConnectionsResponse();
 
@@ -72,7 +72,7 @@ class GooglePeopleApiTest {
         when(list.execute()).thenReturn(response);
 
         // act
-        List<Name> result = GooglePeopleApi.getContacts(3);
+        List<Name> result = googlePeopleApi.getContacts(3);
 
         // assert
         assertEquals(3, result.size(), "The number of contacts should be 3");
@@ -80,4 +80,5 @@ class GooglePeopleApiTest {
         assertEquals("Jane Smith", result.get(1).getDisplayName(), "Second contact's name should be Jane Smith");
         assertEquals("Alice Johnson", result.get(2).getDisplayName(), "Third contact's name should be Alice Johnson");
     }
+
 }

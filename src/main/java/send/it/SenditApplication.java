@@ -13,6 +13,7 @@ public class SenditApplication {
 
 	public static void main(String[] args) throws GeneralSecurityException, IOException, InterruptedException {
 		SpringApplication.run(SenditApplication.class, args);
-		GoogleCalendarApi.getEvents();
+		GoogleCalendarApi googleCalendarApi = new GoogleCalendarApi();
+		googleCalendarApi.getEvents();
 	}
 }
