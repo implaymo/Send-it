@@ -19,20 +19,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GooglePeopleApi {
+public class PeopleApi {
+
+    private static final Logger logger = LoggerFactory.getLogger(PeopleApi.class);
 
     private static final String APPLICATION_NAME = "SendItGooglePeopleApi";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
-    private static final Logger logger = LoggerFactory.getLogger(GooglePeopleApi.class);
-    private final GoogleApiCredentials _googleApiCredentials = new GoogleApiCredentials();
+
 
      public List<Name> getContacts(int numberOfContactsUserWants) throws IOException, GeneralSecurityException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        PeopleService peopleService = new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, _googleApiCredentials.getCredentials(HTTP_TRANSPORT))
-                .setApplicationName(APPLICATION_NAME)
-                .build();
+        PeopleService service =
+        new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, Credentials.getCredentials(HTTP_TRANSPORT))
+            .setApplicationName(APPLICATION_NAME)
+            .build();
 
-        ListConnectionsResponse response = peopleService.people().connections()
+        ListConnectionsResponse response = service.people().connections()
                 .list("people/me")
                 .setPageSize(numberOfContactsUserWants)
                 .setPersonFields("names,emailAddresses")
@@ -55,7 +57,7 @@ public class GooglePeopleApi {
 
     public void searchUserContacts(String userSearchedContact) throws InterruptedException, IOException, GeneralSecurityException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        PeopleService peopleService = new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, _googleApiCredentials.getCredentials(HTTP_TRANSPORT))
+        PeopleService peopleService = new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, Credentials.getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
 
@@ -77,4 +79,3 @@ public class GooglePeopleApi {
         System.out.println(contacts);
     }
 }
-

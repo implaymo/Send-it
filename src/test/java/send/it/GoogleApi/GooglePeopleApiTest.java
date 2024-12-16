@@ -39,7 +39,7 @@ class GooglePeopleApiTest {
     private PeopleService.People.Connections.List list;
 
     @InjectMocks
-    private GooglePeopleApi googlePeopleApi;
+    private PeopleApi googlePeopleApi;
 
 
     @Test
