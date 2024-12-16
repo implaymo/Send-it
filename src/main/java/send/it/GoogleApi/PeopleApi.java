@@ -16,21 +16,22 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
 public class PeopleApi {
 
     private static final Logger logger = LoggerFactory.getLogger(PeopleApi.class);
-
     private static final String APPLICATION_NAME = "SendItGooglePeopleApi";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
-
+    private static final List<String> SCOPES = Arrays.asList(PeopleServiceScopes.CONTACTS_READONLY);
+    private static final String TOKENS_DIRECTORY_PATH = "Peopletokens";
 
      public List<Name> getContacts(int numberOfContactsUserWants) throws IOException, GeneralSecurityException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         PeopleService service =
-        new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, Credentials.getCredentials(HTTP_TRANSPORT))
+        new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, Credentials.getCredentials(HTTP_TRANSPORT, SCOPES, TOKENS_DIRECTORY_PATH))
             .setApplicationName(APPLICATION_NAME)
             .build();
 
@@ -57,7 +58,7 @@ public class PeopleApi {
 
     public void searchUserContacts(String userSearchedContact) throws InterruptedException, IOException, GeneralSecurityException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        PeopleService peopleService = new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, Credentials.getCredentials(HTTP_TRANSPORT))
+        PeopleService peopleService = new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, Credentials.getCredentials(HTTP_TRANSPORT, SCOPES, TOKENS_DIRECTORY_PATH))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
 
