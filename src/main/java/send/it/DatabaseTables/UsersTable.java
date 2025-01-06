@@ -4,6 +4,17 @@ package send.it.DatabaseTables;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+
+import org.apache.commons.validator.EmailValidator;
+import org.passay.CharacterRule;
+import org.passay.LengthRule;
+import org.passay.PasswordData;
+import org.passay.PasswordValidator;
+import org.passay.RuleResult;
+import org.passay.UsernameRule;
+import org.passay.WhitespaceRule;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 
 @Entity
 @Table(name = "users")
@@ -13,74 +24,102 @@ public class UsersTable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private int _id;
 
     @Column(name = "email")
-    private String email;
+    private String _email;
 
     @Column(name = "username")
-    private String username;
+    private String _username;
 
     @Column(name = "name")
-    private String name;
+    private String _name;
 
     @Column(name = "birthdate")
-    private LocalDate birthdate;
+    private LocalDate _birthdate;
 
     @Column(name = "password")
-    private String password;
+    private String _password;
 
     @Column(name = "salt")
-    private byte[] salt;
+    private byte[] _salt;
 
 
     // Getters
-    public int getId() {
-        return  id;
+    private int getId() {
+        return  _id;
     }
 
-    public String getEmail() {
-        return email;
+    private String getEmail() {
+        return _email;
     }
 
-    public String getUsername () {
-        return username;
+    private String getUsername () {
+        return _username;
     }
 
-    public String getName() {
-        return name;
+    private String getName() {
+        return _name;
     }
 
-    public LocalDate getBirthdate() {
-        return birthdate;
+    private LocalDate getBirthdate() {
+        return _birthdate;
     }
 
-    public String getPassword () {
-        return password;
+    private String getPassword () {
+        return _password;
     }
 
-    public byte[] getSalt() {
-        return salt;
+    private byte[] getSalt() {
+        return _salt;
     }
 
-    // Setters
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public void setBirthdate(LocalDate birthdate) {
-        this.birthdate = birthdate;
-    }
-    public void setPassword(String password) {
-        this.password = password;
+    private boolean isIdValid(int id) {
+        if (id < 0) {
+            return false;
+        } 
+        return true;
     }
 
-    public void setSalt(byte[] salt) {
-        this.salt = salt;
+    @SuppressWarnings("deprecation")
+    private boolean isEmailValid(String email) {
+        EmailValidator validator = EmailValidator.getInstance();
+        return validator.isValid(email);
+    }
+
+    private boolean isUsernameValid(String username) {
+        if (username == null || username.isBlank()) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isNameValid(String name) {
+        if (name == null || name.isBlank()) {
+            return false;
+        }
+        return true;
+    }
+
+
+    private boolean isBirthdateValid(LocalDate birthdate) {
+        if (birthdate.equals(null)) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isPasswordValid(String password) {
+        PasswordValidator validator = new PasswordValidator(Arrays.asList(
+            new LengthRule(8, 50),
+            new UsernameRule(),
+            new WhitespaceRule() 
+        ));
+        RuleResult result = validator.validate(new PasswordData(password));
+        return result.isValid();
+    }
+
+    private boolean isSaltValid(byte[] salt) {
+        return salt != null && salt.length > 0;
     }
 }
