@@ -35,3 +35,6 @@ build/
 
 /tokens
 credentials.json
+
+CalendarTokens/
+PeopleTokens/

@@ -1,4 +1,4 @@
-package send.it;
+package send.it.Security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +13,8 @@ import java.util.Base64;
 public class PasswordHashing {
 
     static final Logger logger = LoggerFactory.getLogger(PasswordHashing.class);
-    public static final Integer iterationCount = 65536;
-    public static final Integer keyLenght = 256;
+    private static final Integer iterationCount = 65536;
+    private static final Integer keyLenght = 256;
 
 
     public static String hashPassword(String password, UsersTable usersTable) {
@@ -35,13 +35,4 @@ public class PasswordHashing {
     }
 
 
-    public static boolean verifyPassword(String inputPassword, String storedHash, byte[] salt, int iterationCount, int keyLength) throws Exception {
-        KeySpec spec = new PBEKeySpec(inputPassword.toCharArray(), salt, iterationCount, keyLength);
-        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-
-        byte[] hash = factory.generateSecret(spec).getEncoded();
-        String newHash = Base64.getEncoder().encodeToString(hash);
-        logger.info("IS PASSWORD VALID? {}", newHash.equals(storedHash));
-        return newHash.equals(storedHash);
-    }
 }
