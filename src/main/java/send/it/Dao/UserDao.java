@@ -37,6 +37,7 @@ public class UserDao {
         UsersTable loginUser = null;
         try (Session session = HibernateUtil.openSession()) {
             String hql = "FROM UsersTable U WHERE U.username = :username";
+            @SuppressWarnings({ "deprecation", "rawtypes" })
             Query query = session.createQuery(hql);
             query.setParameter("username", username);
             loginUser = (UsersTable) query.getSingleResult();
