@@ -2,6 +2,7 @@ package send.it.Security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import send.it.DatabaseTables.UsersTable;
 
 import javax.crypto.SecretKeyFactory;
@@ -19,7 +20,6 @@ public class PasswordHashing {
 
     public static String hashPassword(String password, UsersTable usersTable) {
         try {
-            PasswordVerfication passwordVerfication = new PasswordVerfication();
             SecureRandom secureRandom = new SecureRandom();
             byte[] salt = new byte[16];
             secureRandom.nextBytes(salt);

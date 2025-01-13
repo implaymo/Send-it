@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 public class Database {
     private final static String dbUrl = System.getenv("url");
-    private final static String dbDriver = System.getenv("driver");
     private final static String dbUsername = System.getenv("username");
     private final static String dbPassword = System.getenv("password");
 
