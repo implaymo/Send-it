@@ -1,4 +1,4 @@
-package send.it.Entity;
+package send.it.DatabaseTables;
 
 
 import jakarta.persistence.*;
@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "messages")
-public class Messages {
+public class MessagesTable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -36,9 +36,5 @@ build/
 /tokens
 credentials.json
 
-# Ignore Api generated tokens
 CalendarTokens/
 PeopleTokens/
-
-# Ignore application.properties
-src/main/.env

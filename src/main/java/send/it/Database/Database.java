@@ -1,10 +1,13 @@
-/*package send.it.Database;
+package send.it.Database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Database {
+    private final static String dbUrl = System.getenv("url");
+    private final static String dbUsername = System.getenv("username");
+    private final static String dbPassword = System.getenv("password");
 
     public static Connection getConnection() {
         Connection con = null;
@@ -16,4 +19,4 @@ public class Database {
         }
         return con;
     }
-}*/
+}

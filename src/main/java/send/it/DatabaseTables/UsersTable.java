@@ -1,4 +1,4 @@
-package send.it.Entity;
+package send.it.DatabaseTables;
 
 
 import java.time.LocalDate;
@@ -11,14 +11,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import send.it.Security.PasswordHashing;
 
 import java.util.Arrays;
 
-
-@Entity
 @Table(name = "users")
-public class Users {
+@Entity
+public class UsersTable {
     // Interacts with users Database. Gets and Sends data
 
     @Id
@@ -43,30 +41,6 @@ public class Users {
 
     @Column(name = "salt")
     private byte[] _salt;
-
-    public Users() {}
-
-
-    public int getId() {
-        return _id;
-    }
-    
-    public String getEmail() {
-        return _email;
-    }
-    
-    public LocalDate getBirthdate() {
-        return _birthdate;
-    }
-    
-    public String getPassword() {
-        return _password;
-    }
-    
-    public byte[] getSalt() {
-        return _salt;
-    }
-
 
     // Setters with validation
     public void setId(int id) {
@@ -109,9 +83,9 @@ public class Users {
         }
     }
 
-    public void setPassword(String password, byte[] salt) {
+    public void setPassword(String password) {
         if (isPasswordValid(password)) {
-            this._password = PasswordHashing.hashPasswordAndSetUserSalt(password, salt);
+            this._password = password;
         } else {
             throw new IllegalArgumentException("Invalid password");
         }
