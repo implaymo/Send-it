@@ -3,11 +3,8 @@ package send.it.Security;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import send.it.DatabaseTables.UsersTable;
-
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 import java.util.Base64;
 
@@ -18,13 +15,8 @@ public class PasswordHashing {
     private static final Integer keyLenght = 256;
 
 
-    public static String hashPassword(String password, UsersTable usersTable) {
+    public static String hashPasswordAndSetUserSalt(String password, byte[] salt) {
         try {
-            SecureRandom secureRandom = new SecureRandom();
-            byte[] salt = new byte[16];
-            secureRandom.nextBytes(salt);
-            usersTable.setSalt(salt);
-
             KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, iterationCount, keyLenght);
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
             byte[] hash = factory.generateSecret(spec).getEncoded();
