@@ -11,6 +11,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import send.it.Security.PasswordHashing;
+import send.it.Security.PasswordSalt;
 
 import java.util.Arrays;
 
@@ -18,7 +20,6 @@ import java.util.Arrays;
 @Table(name = "users")
 public class UsersTable {
     // Interacts with users Database. Gets and Sends data
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -42,6 +43,18 @@ public class UsersTable {
     @Column(name = "salt")
     private byte[] salt;
 
+    public UsersTable(String email, String username, String name, LocalDate birthdate, String password, byte[] salt) {
+        this.email = email;
+        this.username = username;
+        this.name = name;
+        this.birthdate = birthdate;
+        this.password = password;
+        this.salt = salt;
+    }
+
+    public UsersTable() {
+
+    }
 
     // Getters
     public int getId() {
@@ -113,9 +126,11 @@ public class UsersTable {
         }
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password, PasswordHashing passwordHashing, PasswordSalt salt) {
         if (isPasswordValid(password)) {
-            this.password = password;
+            byte[] newSalt = salt.generateRandomSalt();
+            setSalt(newSalt);
+            this.password = passwordHashing.hashPassword(password, newSalt);
         } else {
             throw new IllegalArgumentException("Invalid password");
         }

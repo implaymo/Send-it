@@ -1,9 +1,8 @@
 package send.it.Controllers;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import send.it.DatabaseTables.UsersTable;
 import send.it.Repository.UsersRepository;
 
@@ -25,5 +24,10 @@ public class UsersController {
         List<UsersTable> users = usersRepository.findAll();
         System.out.println("Found " + users.size() + " users");
         return users;
+    }
+
+    @PostMapping("/add")
+    public UsersTable addUser(@RequestBody UsersTable user) {
+        return usersRepository.save(user);
     }
 }
