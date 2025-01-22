@@ -34,7 +34,9 @@ build/
 
 
 /tokens
-credentials.json
+src/main/resources/credentials.json
 
 CalendarTokens/
 PeopleTokens/
+
+application.properties

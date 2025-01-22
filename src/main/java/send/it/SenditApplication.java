@@ -16,10 +16,5 @@ public class SenditApplication {
 
 	public static void main(String[] args) throws IOException, GeneralSecurityException, InterruptedException {
 		SpringApplication.run(SenditApplication.class, args);
-
-		CalendarApi calendarApi = new CalendarApi();
-		PeopleApi peopleApi = new PeopleApi();
-		peopleApi.getContacts(10);
-		calendarApi.getEvents();
 	}
 }

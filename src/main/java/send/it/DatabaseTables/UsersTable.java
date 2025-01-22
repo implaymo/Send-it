@@ -14,38 +14,68 @@ import jakarta.persistence.Table;
 
 import java.util.Arrays;
 
-@Table(name = "users")
 @Entity
+@Table(name = "users")
 public class UsersTable {
     // Interacts with users Database. Gets and Sends data
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int _id;
+    private int id;
 
     @Column(name = "email")
-    private String _email;
+    private String email;
 
     @Column(name = "username")
-    private String _username;
+    private String username;
 
     @Column(name = "name")
-    private String _name;
+    private String name;
 
     @Column(name = "birthdate")
-    private LocalDate _birthdate;
+    private LocalDate birthdate;
 
     @Column(name = "password")
-    private String _password;
+    private String password;
 
     @Column(name = "salt")
-    private byte[] _salt;
+    private byte[] salt;
+
+
+    // Getters
+    public int getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public LocalDate getBirthdate() {
+        return birthdate;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public byte[] getSalt() {
+        return salt;
+    }
 
     // Setters with validation
     public void setId(int id) {
         if (isIdValid(id)) {
-            this._id = id;
+            this.id = id;
         } else {
             throw new IllegalArgumentException("Invalid ID");
         }
@@ -53,7 +83,7 @@ public class UsersTable {
 
     public void setEmail(String email) {
         if (isEmailValid(email)) {
-            this._email = email;
+            this.email = email;
         } else {
             throw new IllegalArgumentException("Invalid email");
         }
@@ -61,7 +91,7 @@ public class UsersTable {
 
     public void setUsername(String username) {
         if (isUsernameValid(username)) {
-            this._username = username;
+            this.username = username;
         } else {
             throw new IllegalArgumentException("Invalid username");
         }
@@ -69,7 +99,7 @@ public class UsersTable {
 
     public void setName(String name) {
         if (isNameValid(name)) {
-            this._name = name;
+            this.name = name;
         } else {
             throw new IllegalArgumentException("Invalid name");
         }
@@ -77,7 +107,7 @@ public class UsersTable {
 
     public void setBirthdate(LocalDate birthdate) {
         if (isBirthdateValid(birthdate)) {
-            this._birthdate = birthdate;
+            this.birthdate = birthdate;
         } else {
             throw new IllegalArgumentException("Invalid birthdate");
         }
@@ -85,7 +115,7 @@ public class UsersTable {
 
     public void setPassword(String password) {
         if (isPasswordValid(password)) {
-            this._password = password;
+            this.password = password;
         } else {
             throw new IllegalArgumentException("Invalid password");
         }
@@ -93,7 +123,7 @@ public class UsersTable {
 
     public void setSalt(byte[] salt) {
         if (isSaltValid(salt)) {
-            this._salt = salt;
+            this.salt = salt;
         } else {
             throw new IllegalArgumentException("Invalid salt");
         }
