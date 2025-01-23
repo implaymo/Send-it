@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import send.it.DatabaseTables.UsersTable;
 import send.it.Repository.UsersRepository;
+import send.it.Service.UserService;
 
 import java.util.List;
 
@@ -14,19 +15,22 @@ public class UsersController {
     @Autowired
     private UsersRepository usersRepository;
 
-    public UsersController(UsersRepository usersRepository) {
-        this.usersRepository = usersRepository;
+    @Autowired
+    private UserService userService;
+
+    public UsersController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/users")
     public List<UsersTable> getAllUsers() {
-        List<UsersTable> users = usersRepository.findAll();
+        List<UsersTable> users = userService.getAllUsers();
         System.out.println("Found " + users.size() + " users");
         return users;
     }
 
-    @PostMapping("/add")
+    /*@PostMapping("/add")
     public UsersTable addUser(@RequestBody UsersTable user) {
         return usersRepository.save(user);
-    }
+    }*/
 }
