@@ -1,4 +1,4 @@
-package send.it.Security;
+package send.it.PasswordSecurity;
 
 import java.security.SecureRandom;
 

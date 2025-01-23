@@ -6,11 +6,6 @@ import java.security.GeneralSecurityException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import send.it.GoogleApi.CalendarApi;
-import send.it.GoogleApi.PeopleApi;
-
-
-
 @SpringBootApplication
 public class SenditApplication {
 

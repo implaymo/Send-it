@@ -11,8 +11,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import send.it.Security.PasswordHashing;
-import send.it.Security.PasswordSalt;
+import send.it.PasswordSecurity.PasswordHashing;
+import send.it.PasswordSecurity.PasswordSalt;
 
 import java.util.Arrays;
 
@@ -130,7 +130,7 @@ public class UsersTable {
         if (isPasswordValid(password)) {
             byte[] newSalt = salt.generateRandomSalt();
             setSalt(newSalt);
-            this.password = passwordHashing.hashPassword(password, newSalt);
+            this.password = PasswordHashing.hashPassword(password, newSalt);
         } else {
             throw new IllegalArgumentException("Invalid password");
         }
