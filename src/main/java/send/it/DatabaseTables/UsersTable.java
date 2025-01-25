@@ -43,7 +43,25 @@ public class UsersTable {
     @Column(name = "salt")
     private byte[] salt;
 
-    public UsersTable(String email, String username, String name, LocalDate birthdate, String password, byte[] salt) {
+    public UsersTable(String email, String username, String name, LocalDate birthdate, String password, byte[] salt) throws Exception {
+        if (!isEmailValid(email)) {
+            throw new Exception("Email is invalid.");
+        }
+        if(!isBirthdateValid(birthdate)) {
+            throw new Exception("Birthdate is invalid.");
+        }
+        if(!isNameValid(name)) {
+            throw new Exception("Name is invalid.");
+        }
+        if(!isUsernameValid(username)) {
+            throw new Exception("Username is invalid.");
+        }
+        if(!isPasswordValid(password)){
+            throw new Exception("Password is invalid.");
+        }
+        if(!isSaltValid(salt)) {
+            throw new Exception("Salt is invalid.");
+        }
         this.email = email;
         this.username = username;
         this.name = name;
