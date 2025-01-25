@@ -57,9 +57,6 @@ public class MessagesTable {
     public void setAbbreviation(String abbreviation){
         this.abbreviation = abbreviation;
     }
-    public void setUserId(int userId){
-        this.userId = userId;
-    }
 
     public boolean validateMessage(String message) {
         if (message.length() <= 250  || message.length() > 0) {
