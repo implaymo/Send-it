@@ -23,6 +23,21 @@ public class MessagesTable {
     private int userId;
 
 
+    public MessagesTable() {
+    }
+
+    public MessagesTable(String message, String abbreviation, int userId) throws Exception {
+        if(!validateMessage(message)) {
+            throw new Exception("Message is too long or too short");
+        }
+        if(!validateAbbreviation(abbreviation)) {
+            throw new Exception("Abbreviation is too long or too short.");
+        }
+
+        this.message = message;
+        this.abbreviation = abbreviation;
+        this.userId = userId;
+    }
 
     // Getters
     public int getId() {
@@ -34,14 +49,8 @@ public class MessagesTable {
     public String getAbbreviation() {
         return abbreviation;
     }
-    public int getUserId() {
-        return userId;
-    }
 
     // Setters
-    public void setId(int id) {
-        this.id = id;
-    }
     public void setMessage(String message) {
         this.message = message;
     }
@@ -50,6 +59,20 @@ public class MessagesTable {
     }
     public void setUserId(int userId){
         this.userId = userId;
+    }
+
+    public boolean validateMessage(String message) {
+        if (message.length() <= 250  || message.length() > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean validateAbbreviation(String abbreviation){
+        if(abbreviation.length() <= 5  || abbreviation.length() > 0) {
+            return true;
+        }
+        return false;
     }
 
 }
