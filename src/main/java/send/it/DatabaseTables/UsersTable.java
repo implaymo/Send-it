@@ -43,7 +43,7 @@ public class UsersTable {
     @Column(name = "salt")
     private byte[] salt;
 
-    public UsersTable(String email, String username, String name, LocalDate birthdate, String password, byte[] salt) throws Exception {
+    public UsersTable(String email, String username, String name, LocalDate birthdate, String password) throws Exception {
         if (!isEmailValid(email)) {
             throw new Exception("Email is invalid.");
         }
@@ -59,15 +59,11 @@ public class UsersTable {
         if(!isPasswordValid(password)){
             throw new Exception("Password is invalid.");
         }
-        if(!isSaltValid(salt)) {
-            throw new Exception("Salt is invalid.");
-        }
         this.email = email;
         this.username = username;
         this.name = name;
         this.birthdate = birthdate;
         this.password = password;
-        this.salt = salt;
     }
 
     public UsersTable() {

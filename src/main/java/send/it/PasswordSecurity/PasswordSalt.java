@@ -2,7 +2,11 @@ package send.it.PasswordSecurity;
 
 import java.security.SecureRandom;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class PasswordSalt {
+    
 
     public PasswordSalt() {
 

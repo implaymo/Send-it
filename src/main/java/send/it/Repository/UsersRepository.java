@@ -5,4 +5,5 @@ import send.it.DatabaseTables.UsersTable;
 
 
 public interface UsersRepository extends JpaRepository<UsersTable, Integer> {
+
 }

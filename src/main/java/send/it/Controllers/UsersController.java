@@ -12,8 +12,6 @@ import java.util.List;
 @RequestMapping("/api")
 public class UsersController {
 
-    @Autowired
-    private UsersRepository usersRepository;
 
     @Autowired
     private UserService userService;
@@ -29,8 +27,8 @@ public class UsersController {
         return users;
     }
 
-    /*@PostMapping("/add")
-    public UsersTable addUser(@RequestBody UsersTable user) {
-        return usersRepository.save(user);
-    }*/
+    @PostMapping("/add")
+    public UsersTable addUser(@RequestBody UsersTable request) {
+        return userService.registerUser(request.getEmail(), request.getUsername(), request.getName(), request.getBirthdate(), request.getPassword());
+    }
 }
