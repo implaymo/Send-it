@@ -1,15 +1,10 @@
 package send.it.PasswordSecurity;
 
 import java.security.spec.KeySpec;
-import java.util.Arrays;
 import java.util.Base64;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-
-import org.passay.LengthRule;
-import org.passay.PasswordValidator;
-import org.passay.WhitespaceRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

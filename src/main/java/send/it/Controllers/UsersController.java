@@ -1,9 +1,10 @@
 package send.it.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import send.it.DatabaseTables.UsersTable;
-import send.it.Repository.UsersRepository;
+import send.it.Dto.UsersDto;
 import send.it.Service.UserService;
 
 import java.util.List;
@@ -21,14 +22,19 @@ public class UsersController {
     }
 
     @GetMapping("/users")
-    public List<UsersTable> getAllUsers() {
-        List<UsersTable> users = userService.getAllUsers();
+    public List<UsersDto> getAllUsers() {
+        List<UsersDto> users = userService.getAllUsers();
         System.out.println("Found " + users.size() + " users");
         return users;
     }
 
     @PostMapping("/add")
-    public UsersTable addUser(@RequestBody UsersTable request) {
-        return userService.registerUser(request.getEmail(), request.getUsername(), request.getName(), request.getBirthdate(), request.getPassword());
+    public ResponseEntity<UsersDto> addUser(@RequestBody UsersDto request) throws Exception {
+        try {
+            UsersDto savedUser = userService.registerUser(request);
+            return ResponseEntity.ok(savedUser);
+        }  catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);  // Return a 400 status code
+        }
     }
 }
