@@ -3,11 +3,10 @@ package send.it.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import send.it.Dto.UsersDto;
+import send.it.Entity.Users;
 import send.it.PasswordSecurity.PasswordHashing;
 import send.it.PasswordSecurity.PasswordSalt;
 import send.it.Repository.UsersRepository;
@@ -24,23 +23,23 @@ public class UserService {
     @Autowired
     PasswordSalt passwordSalt;
 
-    public List<UsersDto> getAllUsers() {
+
+    public List<Users> getAllUsers() {
         return usersRepository.findAll();
     }
 
-    public UsersDto registerUser(UsersDto usersDto) throws Exception {
-        // If needed, ensure password is hashed before saving
-        if(isUserInDatabase(usersDto.getEmail())) {
+    public Users registerUser(Users users) throws Exception {
+
+        if(isUserInDatabase(users.getEmail())) {
             throw new Exception("User already exists in database.");
         }
-        if (usersDto.getPassword() != null && !usersDto.getPassword().isEmpty()) {
-            usersDto.setPassword(usersDto.getPassword(), passwordHashing, passwordSalt);
-        }
-        return usersRepository.save(usersDto);
+        users.setPassword(users.getPassword(), passwordHashing, passwordSalt);
+
+        return usersRepository.save(users);
     }
 
     public boolean isUserInDatabase(String email) {
-        Optional<UsersDto> existingUser = usersRepository.findByEmail(email);
+        Optional<Users> existingUser = usersRepository.findByEmail(email);
         if (existingUser.isPresent()) {
             return true;
         }

@@ -1,14 +1,11 @@
-package send.it.Dto;
+package send.it.Entity;
 
 
 import java.time.LocalDate;
 
-import com.google.auto.value.AutoValue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.apache.commons.validator.routines.EmailValidator;
-import org.passay.*;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,7 +24,7 @@ import java.util.Arrays;
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsersDto {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,22 +54,21 @@ public class UsersDto {
     @Column(name = "salt", nullable = false)
     private byte[] salt;
 
-    // Use a builder for cleaner initialization
-    public static class UsersDtoBuilder {
-        private String password;
-        private byte[] salt;
-
-        public UsersDtoBuilder password(String password, PasswordHashing passwordHashing, PasswordSalt saltGenerator) {
-            this.salt = saltGenerator.generateRandomSalt();
-            this.password = passwordHashing.hashPassword(password, this.salt);
-            return this;
-        }
-    }
-
     // Custom password handling logic
-    public void setPassword(String password, PasswordHashing passwordHashing, PasswordSalt saltGenerator) {
-        byte[] newSalt = saltGenerator.generateRandomSalt();
+    public void setPassword(String password, PasswordHashing passwordHashing, PasswordSalt passwordSalt) {
+        byte[] newSalt = passwordSalt.generateRandomSalt();
+        System.out.println("Generated Salt: " + Arrays.toString(newSalt));  // Debugging output
+
+        if (newSalt == null || newSalt.length == 0) {
+            throw new IllegalStateException("Generated salt should never be null or empty");
+        }
         this.salt = newSalt;
-        this.password = passwordHashing.hashPassword(password, newSalt);
+
+        String hashedPassword = passwordHashing.hashPassword(password, newSalt);
+        if (hashedPassword == null || hashedPassword.isEmpty()) {
+            throw new IllegalStateException("Password hashing failed");
+        }
+
+        this.password = hashedPassword;  // Set the hashed password
     }
 }

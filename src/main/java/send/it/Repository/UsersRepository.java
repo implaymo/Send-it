@@ -5,9 +5,9 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-import send.it.Dto.UsersDto;
+import send.it.Entity.Users;
 
 
-public interface UsersRepository extends JpaRepository<UsersDto, Integer> {
-    Optional<UsersDto> findByEmail(String email);
+public interface UsersRepository extends JpaRepository<Users, Integer> {
+    Optional<Users> findByEmail(String email);
 }
