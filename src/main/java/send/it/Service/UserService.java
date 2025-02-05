@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import send.it.Dto.UserDto;
 import send.it.Entity.Users;
 import send.it.PasswordSecurity.PasswordHashing;
 import send.it.PasswordSecurity.PasswordSalt;
@@ -28,15 +29,21 @@ public class UserService {
         return usersRepository.findAll();
     }
 
-    public Users registerUser(Users users) throws Exception {
-
-        if(isUserInDatabase(users.getEmail())) {
+    public Users registerUser(UserDto userDto) throws Exception {
+        if (isUserInDatabase(userDto.getEmail())) {
             throw new Exception("User already exists in database.");
         }
-        users.setSalt(passwordSalt);
-        users.setPassword(users.getPassword(), passwordHashing);
+        Users user = Users.builder()
+                .email(userDto.getEmail())
+                .username(userDto.getUsername())
+                .name(userDto.getName())
+                .birthdate(userDto.getBirthdate())
+                .build();
 
-        return usersRepository.save(users);
+        user.setSalt(passwordSalt);
+        user.setPassword(userDto.getPassword(), passwordHashing);
+
+        return usersRepository.save(user);
     }
 
     private boolean isUserInDatabase(String email) {
