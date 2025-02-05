@@ -39,7 +39,7 @@ public class UserService {
         return usersRepository.save(users);
     }
 
-    public boolean isUserInDatabase(String email) {
+    private boolean isUserInDatabase(String email) {
         Optional<Users> existingUser = usersRepository.findByEmail(email);
         if (existingUser.isPresent()) {
             return true;
