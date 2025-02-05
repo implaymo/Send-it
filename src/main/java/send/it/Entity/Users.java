@@ -54,8 +54,15 @@ public class Users {
     @Column(name = "salt", nullable = false)
     private byte[] salt;
 
-    // Custom password handling logic
-    public void setPassword(String password, PasswordHashing passwordHashing, PasswordSalt passwordSalt) {
+    public void setPassword(String password, PasswordHashing passwordHashing) {
+        String hashedPassword = passwordHashing.hashPassword(password, this.salt);
+        if (hashedPassword == null || hashedPassword.isEmpty()) {
+            throw new IllegalStateException("Password hashing failed");
+        }
+        this.password = hashedPassword;  // Set the hashed password
+    }
+
+    public void setSalt(PasswordSalt passwordSalt) {
         byte[] newSalt = passwordSalt.generateRandomSalt();
         System.out.println("Generated Salt: " + Arrays.toString(newSalt));  // Debugging output
 
@@ -63,12 +70,5 @@ public class Users {
             throw new IllegalStateException("Generated salt should never be null or empty");
         }
         this.salt = newSalt;
-
-        String hashedPassword = passwordHashing.hashPassword(password, newSalt);
-        if (hashedPassword == null || hashedPassword.isEmpty()) {
-            throw new IllegalStateException("Password hashing failed");
-        }
-
-        this.password = hashedPassword;  // Set the hashed password
     }
 }

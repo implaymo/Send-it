@@ -33,7 +33,8 @@ public class UserService {
         if(isUserInDatabase(users.getEmail())) {
             throw new Exception("User already exists in database.");
         }
-        users.setPassword(users.getPassword(), passwordHashing, passwordSalt);
+        users.setSalt(passwordSalt);
+        users.setPassword(users.getPassword(), passwordHashing);
 
         return usersRepository.save(users);
     }
