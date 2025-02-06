@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import send.it.Dto.UserDto;
+import send.it.Dto.UserRequestDTO;
 import send.it.Entity.Users;
 import send.it.Service.UserService;
 
@@ -30,7 +30,7 @@ public class UsersController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Users> addUser(@RequestBody UserDto request) throws Exception {
+    public ResponseEntity<Users> addUser(@RequestBody UserRequestDTO request) throws Exception {
         try {
             Users savedUser = userService.registerUser(request);
             return ResponseEntity.ok(savedUser);
