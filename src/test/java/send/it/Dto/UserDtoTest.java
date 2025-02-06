@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserDtoTest {
 
-
     @Test
     void shouldReturnValidObjectForConstrutorWithNoParameters() {
         // arrange
@@ -24,7 +23,7 @@ class UserDtoTest {
         // arrange
         LocalDate birthdate = LocalDate.of(1995, 5, 20);
         // act
-        UserDto userDto = new UserDto("john@example.com", "john123", "John", birthdate);
+        UserDto userDto = new UserDto("john@example.com", "john123", "John", birthdate, "password123");
         // assert
         assertThat(userDto.getEmail()).isEqualTo("john@example.com");
     }
@@ -34,7 +33,7 @@ class UserDtoTest {
         // arrange
         LocalDate birthdate = LocalDate.of(1995, 5, 20);
         // act
-        UserDto userDto = new UserDto("john@example.com", "john123", "John", birthdate);
+        UserDto userDto = new UserDto("john@example.com", "john123", "John", birthdate, "password123");
         // assert
         assertThat(userDto.getUsername()).isEqualTo("john123");
     }
@@ -44,7 +43,7 @@ class UserDtoTest {
         // arrange
         LocalDate birthdate = LocalDate.of(1995, 5, 20);
         // act
-        UserDto userDto = new UserDto("john@example.com", "john123", "John", birthdate);
+        UserDto userDto = new UserDto("john@example.com", "john123", "John", birthdate, "password123");
         // assert
         assertThat(userDto.getName()).isEqualTo("John");
     }
@@ -54,11 +53,20 @@ class UserDtoTest {
         // arrange
         LocalDate birthdate = LocalDate.of(1995, 5, 20);
         // act
-        UserDto userDto = new UserDto("john@example.com", "john123", "John", birthdate);
+        UserDto userDto = new UserDto("john@example.com", "john123", "John", birthdate, "password123");
         // assert
         assertThat(userDto.getBirthdate()).isEqualTo(birthdate);
     }
 
+    @Test
+    void shouldReturnPasswordOfCreatedDto() {
+        // arrange
+        LocalDate birthdate = LocalDate.of(1995, 5, 20);
+        // act
+        UserDto userDto = new UserDto("john@example.com", "john123", "John", birthdate, "password123");
+        // assert
+        assertThat(userDto.getPassword()).isEqualTo("password123");
+    }
 
     @Test
     void shouldReturnEmailSetted(){
@@ -70,6 +78,7 @@ class UserDtoTest {
         userDto.setUsername("jane123");
         userDto.setName("Jane");
         userDto.setBirthdate(birthdate);
+        userDto.setPassword("password456");
         //assert
         assertThat(userDto.getEmail()).isEqualTo("jane@example.com");
     }
@@ -84,6 +93,7 @@ class UserDtoTest {
         userDto.setUsername("jane123");
         userDto.setName("Jane");
         userDto.setBirthdate(birthdate);
+        userDto.setPassword("password456");
         //assert
         assertThat(userDto.getUsername()).isEqualTo("jane123");
     }
@@ -98,6 +108,7 @@ class UserDtoTest {
         userDto.setUsername("jane123");
         userDto.setName("Jane");
         userDto.setBirthdate(birthdate);
+        userDto.setPassword("password456");
         //assert
         assertThat(userDto.getName()).isEqualTo("Jane");
     }
@@ -112,8 +123,24 @@ class UserDtoTest {
         userDto.setUsername("jane123");
         userDto.setName("Jane");
         userDto.setBirthdate(birthdate);
+        userDto.setPassword("password456");
         //assert
         assertThat(userDto.getBirthdate()).isEqualTo(birthdate);
+    }
+
+    @Test
+    void shouldReturnPasswordSetted() {
+        // arrange
+        UserDto userDto = new UserDto();
+        LocalDate birthdate = LocalDate.of(2000, 1, 15);
+        //act
+        userDto.setEmail("jane@example.com");
+        userDto.setUsername("jane123");
+        userDto.setName("Jane");
+        userDto.setBirthdate(birthdate);
+        userDto.setPassword("password456");
+        //assert
+        assertThat(userDto.getPassword()).isEqualTo("password456");
     }
 
     @Test
@@ -121,9 +148,9 @@ class UserDtoTest {
         //arrange
         LocalDate birthdate = LocalDate.of(1995, 5, 20);
         //act
-        UserDto user1 = new UserDto("john@example.com", "john123", "John", birthdate);
-        UserDto user2 = new UserDto("john@example.com", "john123", "John", birthdate);
-        UserDto user3 = new UserDto("jane@example.com", "jane123", "Jane", LocalDate.of(2000, 1, 15));
+        UserDto user1 = new UserDto("john@example.com", "john123", "John", birthdate, "password123");
+        UserDto user2 = new UserDto("john@example.com", "john123", "John", birthdate, "password123");
+        UserDto user3 = new UserDto("jane@example.com", "jane123", "Jane", LocalDate.of(2000, 1, 15), "password456");
 
         //assert
         assertThat(user1).isEqualTo(user2);
@@ -135,13 +162,10 @@ class UserDtoTest {
         //arrange
         LocalDate birthdate = LocalDate.of(1995, 5, 20);
         //act
-        UserDto user1 = new UserDto("john@example.com", "john123", "John", birthdate);
-        UserDto user2 = new UserDto("john@example.com", "john123", "John", birthdate);
+        UserDto user1 = new UserDto("john@example.com", "john123", "John", birthdate, "password123");
+        UserDto user2 = new UserDto("john@example.com", "john123", "John", birthdate, "password123");
 
         //assert
         assertThat(user1.hashCode()).isEqualTo(user2.hashCode());
-
     }
-
-
 }
